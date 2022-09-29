@@ -9,10 +9,19 @@ func RunAPI(address string) error {
 	h, _ := NewHandler()
 	r.GET("/products", h.GetProducts)
 	r.GET("/promos", h.GetPromos)
-	r.POST("/users/signin", h.SignIn)
-	r.POST("/users", h.AddUser)
-	r.POST("/user/:id/signout", h.SignOut)
-	r.GET("/user/:id/orders", h.GetOrders)
-	r.POST("/users/charge", h.Charge)
+
+	userGroup := r.Group("/user")
+	{
+		userGroup.POST("/:id/signout", h.SignOut)
+		userGroup.GET("/:id/orders", h.GetOrders)
+	}
+
+	usersGroup := r.Group("/users")
+	{
+		usersGroup.POST("/signin", h.SignIn)
+		usersGroup.POST("", h.AddUser)
+		usersGroup.POST("/charge", h.Charge)
+	}
+
 	return r.Run(address)
 }
