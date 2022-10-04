@@ -27,3 +27,21 @@ func (db *DBORM) GetPromos() (products []models.Product, err error) {
 func (db *DBORM) GetCustomerByName(firstname string, lastname string) (customer models.Customer, err error) {
 	return customer, db.Where(&models.Customer{FirstName: firstname, LastName: lastname}).Find(&customer).Error
 }
+
+func (db *DBORM) GetCustomerById(id int) (customer models.Product, err error) {
+	return customer, db.First(&customer, id).Error
+}
+
+func (db *DBORM) GetProduct(id int) (product models.Product, err error) {
+	return product, db.First(&product, id).Error
+}
+
+func (db *DBORM) AddUser(customer models.Customer) (models.Customer, error) {
+	hashPassword(&customer.Pass)
+	customer.LoggedIn = true
+	return customer, db.Create(&customer).Error
+}
+
+func hashPassword(string *string) {
+	panic("unimplemented")
+}
