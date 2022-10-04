@@ -15,3 +15,15 @@ type DBLayer interface {
 	SignOutUserById(int) error
 	GetCustomerOrdersByID(int) ([]models.Order, error)
 }
+
+func (db *DBORM) GetAllProducts() (products []models.Product, err error) {
+	return products, db.Find(&products).Error
+}
+
+func (db *DBORM) GetPromos() (products []models.Product, err error) {
+	return products, db.Where("promotion IS NOT NULL").Find(&products).Error
+}
+
+func (db *DBORM) GetCustomerByName(firstname string, lastname string) (customer models.Customer, err error) {
+	return customer, db.Where(&models.Customer{FirstName: firstname, LastName: lastname}).Find(&customer).Error
+}
