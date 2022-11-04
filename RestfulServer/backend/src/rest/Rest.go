@@ -30,5 +30,5 @@ func RunAPIWithHandler(address string, h HandlerInterface) error {
 		usersGroup.POST("/charge", h.Charge)
 	}
 
-	return r.Run(address)
+	return r.RunTLS(address, "cert.pem", "key.pem")
 }
