@@ -50,12 +50,12 @@ func (db *DBORM) AddUser(customer models.Customer) (models.Customer, error) {
 
 func (db *DBORM) SignInUser(email, pass string) (customer models.Customer, err error) {
 	result := db.Table("Customers").Where(&models.Customer{Email: email})
-	err = result.Update("loggedin", 1).Error
+	err = result.First(&customer).Error
 	if err != nil {
 		return customer, err
 	}
 	if !checkPassWord(customer.Pass, pass) {
-		return customer, errors.New("invalid password")
+		return customer, ErrINVALIDPASSWORD
 	}
 	customer.Pass = ""
 	err = result.Update("loggedin", 1).Error
