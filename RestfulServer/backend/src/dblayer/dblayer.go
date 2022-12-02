@@ -16,7 +16,7 @@ type DBLayer interface {
 	SignOutUserById(int) error
 	GetCustomerOrdersByID(int) ([]models.Order, error)
 	AddOrder(models.Order) error
-	GetCreditCardId(int) (string, error)
+	GetCreditCardID(int) (string, error)
 	SaveCreditCardForCustomer(int, string) error
 }
 

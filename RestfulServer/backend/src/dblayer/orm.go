@@ -81,6 +81,23 @@ func (db *DBORM) GetCustomerOrdersByID(id int) (orders []models.Order, err error
 		Where("customer_id=?", id).Scan(&orders).Error
 }
 
+func (db *DBORM) AddOrder(order models.Order) error {
+	return db.Create(&order).Error
+}
+
+func (db *DBORM) GetCreditCardID(id int) (string, error) {
+	customerWithCCID := struct {
+		models.Customer
+		CCID string `gorm:"column:cc_customerid"`
+	}{}
+	return customerWithCCID.CCID, db.First(&customerWithCCID, id).Error
+}
+
+func (db *DBORM) SaveCreditCardForCustomer(id int, ccid string) error {
+	result := db.Table("customers").Where("id=?", id)
+	return result.Update("cc_customerid", ccid).Error
+}
+
 func checkPassWord(existingHash, incomingPass string) bool {
 	return bcrypt.CompareHashAndPassword([]byte(existingHash), []byte(incomingPass)) == nil
 }
