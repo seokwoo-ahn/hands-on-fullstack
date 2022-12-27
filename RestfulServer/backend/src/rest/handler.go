@@ -27,14 +27,22 @@ type Handler struct {
 	db dblayer.DBLayer
 }
 
-func NewHandler(dbname, constring string) (HandlerInterface, error) {
-	db, err := dblayer.NewORM(dbname, constring)
+func NewHandler() (HandlerInterface, error) {
+	return NewHandlerWithParams("mysql", "root:root@/gomusic")
+}
+
+func NewHandlerWithParams(dbtype, conn string) (HandlerInterface, error) {
+	db, err := dblayer.NewORM(dbtype, conn)
 	if err != nil {
 		return nil, err
 	}
 	return &Handler{
 		db: db,
 	}, nil
+}
+
+func NewHandlerWithDB(db dblayer.DBLayer) HandlerInterface {
+	return &Handler{db: db}
 }
 
 func (h *Handler) GetProducts(c *gin.Context) {

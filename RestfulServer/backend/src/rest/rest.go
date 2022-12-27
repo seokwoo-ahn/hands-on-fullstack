@@ -5,7 +5,7 @@ import (
 )
 
 func RunAPI(address string) error {
-	h, err := NewHandler("mysql", "root:root@/gomusic")
+	h, err := NewHandler()
 	if err != nil {
 		return err
 	}
