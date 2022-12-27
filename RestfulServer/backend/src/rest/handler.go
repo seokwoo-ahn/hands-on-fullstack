@@ -111,7 +111,7 @@ func (h *Handler) SignOut(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	err = h.db.SignOutUserById(id)
+	err = h.db.SignOutUserByID(id)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return

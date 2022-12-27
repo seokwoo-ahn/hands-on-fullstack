@@ -32,7 +32,7 @@ func (db *DBORM) GetCustomerByName(firstname string, lastname string) (customer 
 	return customer, db.Where(&models.Customer{FirstName: firstname, LastName: lastname}).Find(&customer).Error
 }
 
-func (db *DBORM) GetCustomerById(id int) (customer models.Customer, err error) {
+func (db *DBORM) GetCustomerByID(id int) (customer models.Customer, err error) {
 	return customer, db.First(&customer, id).Error
 }
 
@@ -65,7 +65,7 @@ func (db *DBORM) SignInUser(email, pass string) (customer models.Customer, err e
 	return customer, result.Find(&customer).Error
 }
 
-func (db *DBORM) SignOutUserById(id int) error {
+func (db *DBORM) SignOutUserByID(id int) error {
 	customer := models.Customer{
 		Model: gorm.Model{
 			ID: uint(id),
