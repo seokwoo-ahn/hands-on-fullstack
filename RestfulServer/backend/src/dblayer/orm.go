@@ -32,7 +32,7 @@ func (db *DBORM) GetCustomerByName(firstname string, lastname string) (customer 
 	return customer, db.Where(&models.Customer{FirstName: firstname, LastName: lastname}).Find(&customer).Error
 }
 
-func (db *DBORM) GetCustomerById(id int) (customer models.Product, err error) {
+func (db *DBORM) GetCustomerById(id int) (customer models.Customer, err error) {
 	return customer, db.First(&customer, id).Error
 }
 
